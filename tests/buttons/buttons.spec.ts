@@ -68,3 +68,55 @@ test('right click button', async ({ page }) => {
     await page.getByTestId('btn-right-click').click({ button: 'right' });
     await expect(page.getByTestId('btn-right-click')).toHaveText('Right Click Me');
 });
+// Scenario 9: Verifity button is enabled when it should be
+test('verify button is enabled when it should be', async ({ page }) => {
+    await page.goto('/practice');
+    await page.getByRole('link',{name: 'Practice Buttons – Click, double-click, right-click, and disabled buttons'}).click();
+    await expect(page).toHaveURL('/practice/buttons');
+    await page.getByTestId('btn-goto-home').click();
+    await expect(page).toHaveURL('https://qaplayground.com');
+
+});// Scenario 10: Verifity button is responsive on diffrent screen sizes
+test('verify button is responsive on different screen sizes', async ({ page }) => {
+    await page.goto('/practice');
+    await page.getByRole('link',{name: 'Practice Buttons – Click, double-click, right-click, and disabled buttons'}).click();
+    await expect(page).toHaveURL('/practice/buttons');
+    await page.setViewportSize({ width: 375, height: 667 });
+    await expect(page.getByTestId('btn-goto-home')).toBeVisible();
+    await page.setViewportSize({ width: 768, height: 1024 });
+    await expect(page.getByTestId('btn-goto-home')).toBeVisible();
+    await page.setViewportSize({ width: 1440, height: 900 });
+    await expect(page.getByTestId('btn-goto-home')).toBeVisible();
+});
+// Scenario 11: Verify button is accessible via keyboard
+test('verify button is accessible via keyboard', async ({ page }) => {
+    await page.goto('/practice');
+    await page.getByRole('link',{name: 'Practice Buttons – Click, double-click, right-click, and disabled buttons'}).click();
+    await expect(page).toHaveURL('/practice/buttons');
+    await page.keyboard.press('Tab');
+    await page.keyboard.press('Enter');
+    await expect(page).toHaveURL('https://qaplayground.com');
+});
+// Scenario 12: Verifity button i s accessible to screen readers
+test('verify button is accessible to screen readers', async ({ page }) => {
+    await page.goto('/practice/buttons');
+    await expect(page.getByRole('button', { name: 'Go To Home' })).toBeVisible();
+});
+// Scenario 13: Verifity buton hover state is visually distinct
+test('verify button hover state is visually distinct', async ({ page }) => {
+    await page.goto('/practice/buttons');
+    const button = page.getByTestId('btn-click-hold');
+    await button.hover();
+    await expect(button).toHaveCSS('background-color', 'rgb(37, 99, 235)');
+});
+// Scenario 14: Verifity button page loads without errors
+test('verify button page loads without errors', async ({ page }) => {
+    const consoleMessages: string[] = [];
+    page.on('console', (msg) => {
+        if (msg.type() === 'error') {
+            consoleMessages.push(msg.text());
+        }
+    });
+    await page.goto('/practice/buttons');
+    expect(consoleMessages).toHaveLength(0);
+});
