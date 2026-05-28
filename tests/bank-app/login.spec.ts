@@ -1,15 +1,8 @@
-import { test, expect } from '@playwright/test';
+import { test } from '@playwright/test';
+import { Login } from '../../pageObjects/login'; 
 
-/**
- * Bank Demo App - Logowanie
- * URL: https://qaplayground.com/bank
- * 
- * Do przetestowania:
- * - Logowanie do aplikacji
- * - Walidacja danych logowania
- * - Obsługa błędów
- */
-
-test.describe('Bank App - Login', () => {
-  // Tutaj dodawaj swoje testy
+// Login
+test('login to the application', async ({ page }) => {
+    const login = new Login(page);
+    await login.login();
 });

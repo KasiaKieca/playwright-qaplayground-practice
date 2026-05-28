@@ -30,6 +30,12 @@ export default defineConfig({
 
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: 'on-first-retry',
+    launchOptions: {
+      args: [
+        '--disable-features=PasswordLeakDetection',
+        '--credentials-enable-service=false'
+      ]
+    }
   },
 
   /* Configure projects for major browsers */

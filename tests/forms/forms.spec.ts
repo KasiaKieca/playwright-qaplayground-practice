@@ -35,6 +35,7 @@ test('fill in all fields and click reset form', async ({ page }) => {
     await forms.fillPassword('Password123');
     await forms.fillConfirmPassword('Password123');
     await forms.acceptTerms();
+    await forms.resetForm();
     await forms.verifyResetMessage();
     
 });

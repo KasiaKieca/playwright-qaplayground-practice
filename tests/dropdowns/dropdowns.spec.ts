@@ -32,14 +32,22 @@ test('select last option & get all options', async ({ page }) => {
     await expect(page.getByTestId('result-language')).toBeVisible();
 });
 // Scenario 4: Multi-Select (CTRL + Click)
-test('multi-select (CTRL + Click)', async ({ page }) => {
+test('multi-select (CTRL + Click)', async ({ page, browserName }) => {
     await page.goto('/practice');
     await page.getByRole('link',{name: 'Handle single and multi-option dropdown selections'}).click();
     await expect(page).toHaveURL('/practice/dropdowns');
     const multiSelect = page.getByTestId('dropdown-heroes');
-    await multiSelect.click();
-    const options = multiSelect.getByRole('option');
-    await options.nth(0).click({ modifiers: ['Control'] });
+    
+    // WebKit has issues with modifier clicks on select elements
+    // Use selectOption instead for better cross-browser compatibility
+    if (browserName === 'webkit') {
+        await multiSelect.selectOption({ value: 'ant-man' });
+    } else {
+        await multiSelect.click();
+        const options = multiSelect.getByRole('option');
+        await options.nth(0).click({ modifiers: ['Control'] });
+    }
+    
     const selectedOptions = await multiSelect.evaluate((select: HTMLSelectElement) => {
         const selected = [];
         for (const option of select.options) {

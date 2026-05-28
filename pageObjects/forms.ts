@@ -21,8 +21,8 @@ export class Forms {
         await expect(this.page.getByTestId('input-last-name')).toHaveValue(lastName);
     }
     async firstAndLastName(firstName: string, lastName: string) {
-        this.fillFirstName(firstName);
-        this.fillLastName(lastName);
+        await this.fillFirstName(firstName);
+        await this.fillLastName(lastName);
     }
     async fillEmail(email: string) {
         await this.page.getByTestId('input-email').fill(email)
@@ -76,6 +76,10 @@ export class Forms {
 
     async submitForm() {
         await this.page.getByRole('button', { name: 'Submit', exact: true }).click();
+    }
+
+    async resetForm() {
+        await this.page.getByRole('button', { name: 'Reset', exact: true }).click();
     }
 
     async verifySuccessMessage() {
