@@ -1,4 +1,4 @@
-import { test, expect } from "../../fixtures/Page";
+import { test, expect } from "../fixtures/Page";
 
 test.describe("Buttons Tests", () => {
   test.beforeEach(async ({ buttons }) => {
@@ -10,7 +10,7 @@ test.describe("Buttons Tests", () => {
     await buttons.clickToNavigate("btn-goto-home", "https://qaplayground.com");
   });
   // Scenario 2: Get Button X & Y Coordinates
-  test("get button x & y coordinates", async () => {
+  test("get button x & y coordinates", async ({ buttons }) => {
     await buttons.getButtonCoordinates("btn-find-location", "Find Location");
   });
   // Scenario 3: Get Button Color

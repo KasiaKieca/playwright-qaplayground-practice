@@ -4,6 +4,11 @@ import path from "path";
 export class FileUploadPage {
   constructor(private readonly page: Page) {}
 
+  // 💡 Dodana brakująca metoda, na którą skarżył się TypeScript!
+  async goToFileUploadPage() {
+    await this.page.goto("/practice/file-upload");
+  }
+
   async selectFile(
     selector: string,
     filePath: string,

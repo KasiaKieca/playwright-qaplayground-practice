@@ -1,4 +1,3 @@
-import { fi } from "@faker-js/faker";
 import { expect, Page } from "@playwright/test";
 
 export class Forms {
@@ -27,10 +26,13 @@ export class Forms {
       lastName,
     );
   }
-  async firstAndLastName(firstName1: string, lastName: string) {
-    await this.fillFirstName1(firstName);
-    await this.fillLastName(lastName);
+
+  // 💡 Poprawione: Usunięte "1" z nazw oraz przekazane wymagane selektory do metod fill
+  async firstAndLastName(firstName: string, lastName: string) {
+    await this.fillFirstName("input-first-name", firstName);
+    await this.fillLastName("input-last-name", lastName);
   }
+
   async fillEmail(email: string) {
     await this.page.getByTestId("input-email").fill(email);
     await expect(this.page.getByTestId("input-email")).toHaveValue(email);
